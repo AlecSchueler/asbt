@@ -23,7 +23,7 @@ class sbt_tracker:
         else:
             self._set_version_1()
             with file(self.issue_file, "w") as F:
-                F.write("version=%s\n" % self.version)
+                F.write("version=%d\n" % self.version)
 
         self.sort_keys = {
             "ticket_number": lambda issue: issue[self.ticket_index],
@@ -127,7 +127,12 @@ def handle_input():
         return options, arguments
 
     if not arguments:
-        issue = sys.stdin.read()
+        try:
+            issue = sys.stdin.read().strip().replace("\n"," ")
+        except KeyboardInterrupt:
+            exit(1)
+        if not issue:
+            exit(1)
     else:
         issue = " ".join(arguments)
 
