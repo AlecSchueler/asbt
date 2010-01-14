@@ -7,21 +7,22 @@ import os
 import sys
 
 arch = os.popen("uname -m").read().strip()
-osname = os.popen("uname -o").read().strip()
+kern = os.popen("uname -s").read().strip()
 __author__ = "Alec Schueler"
 __copyright__ = "Copyright (C) 2010  Alec Schueler"
-__version__ = "asbt, version 1.0.0 (%s-%s)" % (arch, osname)
+__version__ = "asbt, version 1.0.0 (%s-%s)" % (arch, kern)
 __license__ = "New BSD License"
 __maintainer__ = "Alec Schueler"
 __email__ = "johannalecschueler@googlemail.com"
 __status__ = "Prototype"
+del arch, kern
 
 
 class asbt_tracker:
 
     def __init__(self, issue_file="./.asbt"):
         self.issue_file = os.path.expanduser(issue_file)
-        self.current = []
+        self.issues = []
 
         if os.path.isfile(self.issue_file):
             with file(self.issue_file, "r") as F:
@@ -42,10 +43,10 @@ class asbt_tracker:
             "state": lambda issue: issue[self.state_index]}
 
     def write(self, issue, urgency=3, type="bug", state="open"):
-        if not self.current:
+        if not self.issues:
             ticket_number = "1"
         else:
-            ticket_number = str(int(self.current[-1][0]) + 1)
+            ticket_number = str(int(self.issues[-1][0]) + 1)
         urgency = str(urgency)
         with file(self.issue_file, "a") as F:
             F.write(self.delimeter.join((ticket_number, urgency, state, type,
@@ -53,30 +54,30 @@ class asbt_tracker:
             F.write("\n")
 
     def report(self, sort_key="ticket_number", reverse=False):
-        self.current.sort(key=self.sort_keys[sort_key])
+        self.issues.sort(key=self.sort_keys[sort_key])
         if reverse:
-            self.current.reverse()
-        for issue in self.current:
+            self.issues.reverse()
+        for issue in self.issues:
             print "%03d %s %-6s %-11s %s" % (int(issue[self.ticket_index]),
-                                             issue[self.urgency_index],
-                                             issue[self.state_index],
-                                             issue[self.type_index],
-                                             issue[self.issue_index])
+                issue[self.urgency_index],
+                issue[self.state_index],
+                issue[self.type_index],
+                issue[self.issue_index])
 
     def update(self):
         with file(self.issue_file, "w") as F:
             F.write("version=%d\n" % self.version)
-            for issue in self.current:
+            for issue in self.issues:
                 F.write(self.delimeter.join(issue))
                 F.write("\n")
 
     def close(self, ticket_number):
-        self.current[ticket_number][self.state_index] = "closed"
+        self.issues[ticket_number][self.state_index] = "closed"
         self.update()
 
     def _set_version_1(self):
         self.version = 1
-        self.delimeter = "$"
+        self.delimeter = " "
         self.ticket_index = 0
         self.urgency_index = 1
         self.state_index = 2
@@ -96,7 +97,7 @@ class asbt_tracker:
             issue = self.delimeter.join(line[self.issue_index:])
             # if there's more than two fields, then the issue had a
             # literal delimeter; let's just join them again
-            self.current.append([ticket_number, urgency, state, type, issue])
+            self.issues.append([ticket_number, urgency, state, type, issue])
 
     def _parse_meta(self, meta_line):
         if not "version=" in meta_line:
@@ -106,10 +107,10 @@ class asbt_tracker:
             version = meta_line[version_start]
             self.version = int(version)
         if self.version == 1:
-            self.delimeter = "$"
+            self.delimeter = " "
 
 
-def handle_input():
+def _handle_input():
     parser = optparse.OptionParser(prog="asbt", usage="%prog [options] "
         "[issue]", version=__version__ + "\n" + __copyright__)
     parser.add_option("-u", action="store", type="int", dest="urgency",
@@ -180,7 +181,7 @@ def handle_input():
 
 
 def main():
-    options, issue, parser = handle_input()
+    options, issue, parser = _handle_input()
     tracker = asbt_tracker(options.file)
 
     if options.list:
