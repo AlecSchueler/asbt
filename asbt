@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-from __future__ import with_statement
-
 import optparse
 import os
 import sys
@@ -43,6 +41,7 @@ class asbt_tracker:
             "state": lambda issue: issue[self.state_index]}
 
     def write(self, issue, urgency=3, type="bug", state="open"):
+        """takes a new issue and writes it to the issue file"""
         if not self.issues:
             ticket_number = "1"
         else:
@@ -54,6 +53,7 @@ class asbt_tracker:
             F.write("\n")
 
     def report(self, sort_key="ticket_number", reverse=False):
+        """prints out a formatted report of issues in the issue file"""
         self.issues.sort(key=self.sort_keys[sort_key])
         if reverse:
             self.issues.reverse()
@@ -65,6 +65,7 @@ class asbt_tracker:
                 issue[self.issue_index])
 
     def update(self):
+        """writes the current issues in self.issues to the issues file"""
         with file(self.issue_file, "w") as F:
             F.write("version=%d\n" % self.version)
             for issue in self.issues:
@@ -72,6 +73,7 @@ class asbt_tracker:
                 F.write("\n")
 
     def close(self, ticket_number):
+        """closes issue `ticket_number`"""
         self.issues[ticket_number][self.state_index] = "closed"
         self.update()
 
@@ -101,7 +103,7 @@ class asbt_tracker:
 
     def _parse_meta(self, meta_line):
         if not "version=" in meta_line:
-            raise ValueError
+            exit(1)
         else:
             version_start = meta_line.index("version=") + len("version=")
             version = meta_line[version_start]
@@ -135,7 +137,7 @@ def _handle_input():
         parser.error("issue type must be one of: \"bug\", \"enchancement\" "
             "or \"proposal\"")
 
-    if 0 > options.urgency > 4:
+    if 1 > options.urgency > 3:
         parser.error("urgency level must be between 0 and 3")
 
     if options.list:
