@@ -143,7 +143,7 @@ def _handle_input():
     if options.list:
         if options.key[0] not in ("t", "s", "u"):
             parser.error("sort key must be one of: \"urgency\", \"type\" "
-                "\"ticket\" (number) or \"state\"")
+                "\"ticket\" or \"state\"")
 
         keys = {"ty": "type", "ti": "ticket_number", "s": "state",
             "u": "urgency"}
