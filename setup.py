@@ -12,7 +12,7 @@ setup(
     license = "New BSD License",
     data_files = [("man.1", ["man/asbt.1"])],
     scripts = ["asbt"],
-    claassifiers = [
+    classifiers = [
         "Development Status :: Beta",
         "Intended Audience :: End Users/Desktop",
         "Intended Audience :: Developers",
