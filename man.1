@@ -1,0 +1,82 @@
+.TH  ASBT 1 "2010-01-28" "Man version 1"
+
+
+.SH NAME
+asbt - simple bug tracker for local projects
+
+
+.SH SYNOPSIS
+.B asbt
+[options] [issue]
+
+
+.SH DESCRIPTION
+\fBasbt\fR (Alec Schueler's Bug Tracker) is a small python script for managing
+issues on a local project. When called with no arguments, an issue is read from
+stdin and saved to the file ./asbt. Alternatively, the issue is taken to be any
+left over arguments (i.e., those arguments which are not options or the
+explicit arguments to particular options).  The ./asbt file is intended to be
+human-readable and editable, and is consists of space delimited fields in the
+order "issue number, urgency, state (open/closed), type
+(bug/enhancement/proposal), description." Any literal spaces in the description
+field will be ignored.
+
+
+.SH OPTIONS
+.IP "\fB-t \fItype"
+The type of the issue. This should be one of "bug," "enhancement" or
+"proposal." Non-ambiguous shortenings of the types will be expanded (e.g. "b"
+will become "bug").
+.IP "\fB-u \fIurgency"
+The urgency of the issue being aadded. This should be in the range 1-3.
+.IP "\fB-c \fInumber"
+Close the specified ticket.
+.IP "\fB-l"
+Print out a list of all tickets, with their associated state values &c.
+.IP "\fB-s \fIkey\fI"
+Sort output by \fIkey\fR, which should be one of "ticket", "urgency", "type" or
+"state". Non-ambiguous shortenings of the key names will be expanded (e.g. "ti"
+will become "ticket"). Please not that this option may be deprecated or removed in
+future versions, as it does nothing which is not easily achievable using
+\fBsort(1)\fR.
+.IP "\fB-r"
+Reverse the order of the output.
+\fBsort(1)\fR.
+.IP "\fB-f \fIfile"
+Use \fIfile\fR instead of ./asbt.
+.IP "\fB-h\fR, \fB--help"
+Show a simple help message listing options.
+.IP "\fB--version"
+Print out the current \fBasbt\fR version.
+
+
+.SH FILES
+.I ./asbt
+
+
+.SH EXAMPLES
+.IP "$ \fBasbt\fR -t pro this is my proposal"
+Create a proposal with the description "this
+is my proposal."
+
+.IP "$ \fBasbt\fR -c -1"
+Close the final issue on the list.
+
+.IP "$ \fBasbt\fR -c 2"
+Close the second issue on the list.
+
+.IP "$ \fBasbt\fR -l | \fBgrep\fR [0-9 ]*open"
+Print out the list of issues, and filter it through \fBgrep(1)\fR
+to show only those which are currently open.
+
+.IP "$ \fBhead\fR -n1 ./some_file | \fBasbt\fR"
+Open a new issue, with urgency 2 and type "enhancement", and a
+description containing the first line of \fIsome_file\fR.
+
+
+.SH BUGS
+Please send the details of any bug you find to johannalecschueler@googlemail.com
+
+
+.SH AUTHOR
+Alec Schueler <johannalecschueler@googlemail.com>
