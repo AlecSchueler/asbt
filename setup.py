@@ -10,7 +10,7 @@ setup(
     author_email = "johannalecschueler@googlemail.com",
     url = "", #XXX
     license = "New BSD License",
-    data_files = [("man.1", ["man/asbt.1"])],
+    data_files = [("man.1", ["asbt.1"])],
     scripts = ["asbt"],
     classifiers = [
         "Development Status :: Beta",
