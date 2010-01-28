@@ -191,8 +191,14 @@ def main():
         exit(0)
 
     if options.ticket_number:
+        if options.ticket_number > 0:
+            to_close = options.ticket_number -1
+        elif options.ticket_number < 0:
+            to_close = options.ticket_number
+        else:
+            parser.error("invaled ticket number")
         try:
-            tracker.close(int(options.ticket_number) - 1)
+            tracker.close(to_close)
         except IndexError:
             parser.error("ticket number %s not found" % options.ticket_number)
         exit(0)
