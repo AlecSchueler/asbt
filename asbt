@@ -191,6 +191,7 @@ def main():
         exit(0)
 
     if options.ticket_number:
+        #TODO: move this block into `_handle_input`
         if options.ticket_number > 0:
             to_close = options.ticket_number -1
         elif options.ticket_number < 0:
