@@ -11,7 +11,7 @@ __version__ = "asbt, version 0.9.0 (%s)" % (kern)
 __license__ = "New BSD License"
 __maintainer__ = "Alec Schueler"
 __email__ = "johannalecschueler@googlemail.com"
-__status__ = "Prototype"
+__status__ = "Beta"
 del kern
 
 
