@@ -4,16 +4,15 @@ import optparse
 import os
 import sys
 
-arch = os.popen("uname -m").read().strip()
 kern = os.popen("uname -s").read().strip()
 __author__ = "Alec Schueler"
 __copyright__ = "Copyright (C) 2010  Alec Schueler"
-__version__ = "asbt, version 1.0.0 (%s-%s)" % (arch, kern)
+__version__ = "asbt, version 0.9.0 (%s)" % (kern)
 __license__ = "New BSD License"
 __maintainer__ = "Alec Schueler"
 __email__ = "johannalecschueler@googlemail.com"
 __status__ = "Prototype"
-del arch, kern
+del kern
 
 
 class asbt_tracker:
