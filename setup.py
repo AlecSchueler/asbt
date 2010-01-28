@@ -11,7 +11,7 @@ setup(
     url = "", #XXX
     license = "New BSD License",
     data_files = [("man.1", ["man/asbt.1"])],
-    scripts = "asbt",
+    scripts = ["asbt"],
     claassifiers = [
         "Development Status :: Beta",
         "Intended Audience :: End Users/Desktop",
