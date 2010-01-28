@@ -1,0 +1,7 @@
+Installation is simply the usual
+
+    # python setup.py install
+
+To see further options use
+
+    $ python setup.py --help

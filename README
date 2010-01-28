@@ -1,0 +1,31 @@
+====
+ASBT
+====
+
+LICENSING
+----------
+
+asbt and associated documentation are both released under the New BSD License.
+For the full text of this license, please read the file entitled "LICENSE."
+
+
+DESCRIPTION
+------------
+
+From the manpage:
+
+asbt (Alec Schueler's Bug Tracker) is a small python script for managing issues
+on a local project. When called with no arguments, an issue is read from stdin
+and saved to the file ./asbt. Alternatively, the issue is taken to be any left
+over arguments (i.e., those arguments which are not options or the explicit
+arguments to particular options).  The ./asbt file is intended to be
+human-readable and editable, and is consists of space delimited fields in the
+order "issue number, urgency, state (open/closed), type
+(bug/enhancement/proposal), description." Any literal spaces in the description
+field will be ignored.
+
+
+INSTALLATION
+------------
+
+See "INSTALL."
