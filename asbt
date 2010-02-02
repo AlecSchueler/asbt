@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import with_statement
+
 import optparse
 import os
 import sys
+
 
 kern = os.popen("uname -s").read().strip()
 __author__ = "Alec Schueler"
